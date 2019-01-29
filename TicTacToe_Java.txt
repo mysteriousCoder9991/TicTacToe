@@ -1,0 +1,173 @@
+/**
+ *  AIM:- TO PLAY BASIC TIC TAC TOE
+ *  PROGRAM DEVELOPED BY :- RAHUL DHAR
+ *  VERSION :-1.01.26.01.2019(BASIC CODE)
+ */
+import java.io.*;
+class ticTacToe
+{
+    static BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+    static String s1,s2;
+    static int arr[][]=new int[3][3] ;
+    static void getData()throws IOException
+    {
+        System.out.println("Enter name of player 1 : ");
+        s1=br.readLine();
+        System.out.println("Enter name of player 2 :  ");
+        s2=br.readLine();
+    }
+
+    static void setArray()
+    {
+        int i,j;
+        for(i=0;i<3;i++)
+            for(j=0;j<3;j++)
+                arr[i][j]=-1;
+    }
+
+    static void display()
+    {
+        int i,j;
+        for(i=0;i<3;i++)
+        {
+            for(j=0;j<3;j++)
+                System.out.print(arr[i][j]+"\t");
+            System.out.println();
+        }
+    }
+
+    static int satCheck()
+    {
+        int i,j,f=0;
+        for(i=0;i<3;i++)
+            for(j=0;j<3;j++)
+                if(arr[i][j]==-1)
+                {
+                    f=1;
+                    break;
+                }
+        return f;
+    }
+
+    static int check(int a)throws IOException
+    {
+        int i,j,f1=0,f2=0,c=0,f3=0,f4=0,f5=0,f6=0,f7=0,f8=0;
+        for(i=0;i<3;i++)//left diagonal
+        {
+            if(arr[i][i]!=a)
+            {
+                f1=1;
+                break;
+            }
+        }
+        if(arr[0][2]==a && arr[1][1]==a && arr[2][0]==a)// right diagonal
+            f2=1;
+        if(arr[0][0]==a && arr [0][1]==a && arr[0][2]== a)//First row
+            f3=1;
+        if(arr[1][0]==a&& arr[1][1]== a&& arr[1][2]== a)// second row
+            f4=1;
+        if(arr[2][0]== a && arr[2][1]==a&& arr[2][2]== a)// third row
+            f5=1;
+        if(arr[0][0]==a && arr[1][0]==a && arr[2][0]==a)// first column
+            f6=1;
+        if(arr[0][1]==a && arr[1][1] ==a && arr[2][1]==a)// second column
+            f7=1;
+        if(arr[0][2]==a && arr[1][2]==a && arr[2][2]== a)//third column
+            f8=1;
+        if(f1==0 ||f2==1||f3==1||f4==1||f5==1||f6==1||f7==1||f8==1)
+            return 1;
+        else
+            return 0;
+    }
+
+    static int posVer(int x, int y)
+    {
+        if((x>=0&&x<=2)&&(y>=0&&y<=2))
+            return 1;
+        else
+            return 0;
+    }
+
+    static  int verify(int x ,int y)
+    {
+        int f1=0;
+        if(arr[x][y]==-1)
+            f1=1;
+        if(f1==1)
+            return 1;
+        else
+            return 0;
+    }
+
+    public static void main()throws IOException
+    {
+        int x1,y1,x2,y2;int p=-1,c=0;
+        getData();
+        setArray();
+        display();
+
+        do
+        {
+            System.out.println(s1+"'s turn \nEnter the position of your '1's");
+
+            do
+            {
+                do
+                {
+                    x1=Integer.parseInt(br.readLine());
+                    y1=Integer.parseInt(br.readLine());
+                    if(posVer(x1,y1)==1)
+                        break;
+                }
+                while(true);
+                if(verify(x1,y1)==1)
+                {
+                    arr[x1][y1]=1;
+                    break;
+                }
+                else
+                    System.out.println("Position already filled ");
+            }
+            while(true);
+            display();
+            if(check(1)==1)
+            {System.out.println(s1+" wins !!!!!!!!!");p=1;
+                break;
+            }   
+
+            System.out.println(s2+" 's 2 turn \nEnter the position of your '0's");
+
+            do
+            {
+                do
+                {
+                    x2=Integer.parseInt(br.readLine());
+                    y2=Integer.parseInt(br.readLine());
+                    if(posVer(x2,y2)==1)
+                        break;
+                }
+                while(true);
+                if(verify(x2,y2)==1)
+                {
+                    arr[x2][y2]=0;
+                    break;
+                }
+                else
+                    System.out.println("Position already filled  ");
+            }
+            while(true);
+            display();
+            if(check(0)==1)
+            {
+                System.out.println(s2+" wins !!!!!!!!!");p=0; 
+                break;
+            }
+
+            if(satCheck()==00)
+                break;
+        }
+        while(true);
+        if(p==-1)
+            System.out.println("Match draw");
+    }
+}
